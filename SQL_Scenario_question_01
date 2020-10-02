@@ -1,6 +1,6 @@
 SQL scenario based questions 01 
 
-There are 2 tables first table Sales_table and seocnd table is Exchange_rate_table when exchange_rate changes then new row inserted on exchange_rate_table with effective_date .
+There are 2 tables first table Sales_table and second table is Exchange_rate_table when exchange_rate changes then new row inserted on exchange_rate_table with effective_date .
 
 Below are input tables 
 
