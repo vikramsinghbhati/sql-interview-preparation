@@ -1,0 +1,37 @@
+Scenario no : 02 . we have to find the pairing teams based on given below table. 
+note : each team should have one pair to another team we should not repeated group in output 
+
+input table : team 
+| teamname   |
+|------------|
+| India      |
+| Pakistan   |
+| Bangladesh |
+| Australia  |
+| Newzealand |
+
+output table 
+| TeamNameA | TeamNameB  |
+|-----------|------------|
+| India     | Pakistan   |
+| India     | Bangladesh |
+| India     | Australia  |
+| India     | Newzealand |
+| Pakistan  | Australia  |
+| Pakistan  | Bangladesh |
+| Pakistan  | Newzealand |
+| Banladesh | Australia  |
+| Banladesh | Newzealand |
+| Australia | Newzealand |
+
+soluton : we can achieve this scenario using windows functions and inner join  
+with team_details as
+(
+ select teamname , row_number() over (order by teamname ) as id from team 
+ )
+ 
+ select A.teamname as TeamNameA , B.teamname as TeamNameB from team_details A inner join team_details B on A.id < B.id order by 1;
+ 
+
+
+
