@@ -1,0 +1,51 @@
+SQL scenario based questions 03 
+
+Scenario no : 02 . we have to find the pairing teams based on given below table. 
+note : each team can have fixture based on home ground and off ground like pairing can be india vs pakistan and pakistan vs india can be possible 
+
+input table : team 
+| teamname   |
+|------------|
+| India      |
+| Pakistan   |
+| Bangladesh |
+| Australia  |
+| Srilanka   |
+
+output table 
+| TeamA      | TeamB      |
+|------------|------------|
+| Australia  | India      |
+| Australia  | Pakistan   |
+| Australia  | Srilanka   |
+| Australia  | bangladesh |
+| India      | Australia  |
+| India      | Pakistan   |
+| India      | Srilanka   |
+| India      | bangladesh |
+| Pakistan   | Australia  |
+| Pakistan   | India      |
+| Pakistan   | Srilanka   |
+| Pakistan   | bangladesh |
+| Srilanka   | Australia  |
+| Srilanka   | India      |
+| Srilanka   | Pakistan   |
+| Srilanka   | bangladesh |
+| bangladesh | Australia  |
+| bangladesh | India      |
+| bangladesh | Pakistan   |
+| bangladesh | Srilanka   |
+
+solutions : 
+
+with team_details_pairing as 
+(
+select teamname from team A union all select teamname from team B 
+) ,
+
+team_details_ranking as
+(
+select row_number() over ( order by teamname asc) as id , teamname from team_details_pairing 
+)
+
+select A.teamname as TeamA , B.teamname as B from team_details_ranking A , team_,details_ranking B where A.teamname <> B.teamname group by A.teamname,B.teamname order by 1;
