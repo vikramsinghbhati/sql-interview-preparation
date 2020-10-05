@@ -1,4 +1,4 @@
-Problem : wirte sql to find source and destination in below output 
+Problem : wirte sql to find source and destination combination in below output 
 Input table : travel_fair
 
 | Source   | Destination | Fair  |
@@ -20,5 +20,5 @@ Solutions 01 : using least and greatest function with distinct keyword
 
 select distinct least(source,destination) as R1 , greatest(source,destination) as R2, fair  from travel_fair ;
 
-soultion 02 : using least and greatest function with group by 
+soultion 02 : using least and greatest function with group by and having clause
 select least(source,destination) as R1 , greatest(source,destination) as R2 , fair from travel_fair group by least(source,destination) , greatest(source,destination), fair having count(*) > 1 ;
