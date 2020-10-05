@@ -1,0 +1,24 @@
+Problem : wirte sql to find source and destination in below output 
+Input table : travel_fair
+
+| Source   | Destination | Fair  |
+|----------|-------------|-------|
+| Chennai  | Banglore    | 500   |
+| Banglore | Chennai     | 500   |
+| Hyderbad | Mumbai      | 2000  |
+| Mumbai   | Hyderbad    | 2000  |
+| Mumbai   | Indore      | 2500  |
+
+output Table
+| Source   | Destination | Fair |
+|----------|-------------|------|
+| Banglore | Chennai     | 500  |
+| Hyderbad | Mumbai      | 2000 |
+| Mumbai   | Indore      | 2500 |
+
+Solutions 01 : using least and greatest function with distinct keyword
+
+select distinct least(source,destination) as R1 , greatest(source,destination) as R2, fair  from travel_fair ;
+
+soultion 02 : using least and greatest function with group by 
+select least(source,destination) as R1 , greatest(source,destination) as R2 , fair from travel_fair group by least(source,destination) , greatest(source,destination), fair having count(*) > 1 ;
