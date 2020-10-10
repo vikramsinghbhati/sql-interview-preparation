@@ -1,0 +1,24 @@
+Problem : repeat column value based on another column value 
+Input Table : T1 
+| Col1 | Col2 |
+|------|------|
+| 1    | W    |
+| 2    | X    |
+| 3    | Y    |
+| 4    | Z    |
+
+Ouput Table : 
+| col2 |
+|------|
+| W    |
+| X    |
+| X    |
+| Y    |
+| Y    |
+| Y    |
+| Z    |
+| Z    |
+| Z    |
+| Z    |
+
+Solution : select col2 from T1 , (select level l from dual connected by level <= (select max(col1) from T1) where l<=col1 order by col2;
