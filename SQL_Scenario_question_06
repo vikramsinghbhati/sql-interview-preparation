@@ -1,0 +1,24 @@
+Job_posting tables
+| column      | datatype |
+|-------------|----------|
+| id          | integer  |
+| job_id      | integer  |
+| user_id     | integer  |
+| date_posted | datetime |
+
+Problem : Given table of job_posting write to find the number of users posted their job once and  find the the number users posted one job mutilple times 
+
+
+with job_post as
+  (
+     select job_id,user_id, count(distinct date_posted) as num_of_posted from job_posting group by job_id,user_id
+  )
+  
+  select sum(case when avg_num_of_post=1 then 1 end) job_posted_once ,
+         sum(case when avg_num_of_post>1 then 1 end) job_posted_mutiple_times
+  from 
+  (
+  select user_id, avg(num_of_posted) as avg_num_of_post
+  from job_post
+  group by user_id 
+  )
