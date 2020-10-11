@@ -1,0 +1,36 @@
+Problem : Acceptance rate by date
+What is the overall friend acceptance rate by date?
+Order by the latest friend request date to the earliest date
+Assume that each friend request starts by a user sending a friend request that's logged in the table with action = 'sent'
+
+Input table : fb_friend_requests
+
+| user_id_sender | user_id_receiver | date       | action   |
+|----------------|------------------|------------|----------|
+| ad4943sdz      | 948ksx123d       | 01-04-2020 | sent     |
+| fg503kdsdd     | ofp049dkd        | 01-04-2020 | sent     |
+| dfdfxf9483     | 9djjjd9283       | 01-04-2020 | sent     |
+| hh643dfert     | 847jfkf203       | 01-04-2020 | sent     |
+| ad4943sdz      | 948ksx123d       | 01-06-2020 | accepted |
+| fffkfld9499    | 993lsldidif      | 01-06-2020 | sent     |
+| fg503kdsdd     | ofp049dkd        | 01-10-2020 | accepted |
+| fffkfld9499    | 993lsldidif      | 01-10-2020 | accepted |
+| r4gfgf2344     | 234ddr4545       | 01-06-2020 | sent     |
+| ffdfff4234234  | lpjzjdi4949      | 01-06-2020 | sent     |
+
+Output : 
+| date       | per_acceptance |
+|------------|----------------|
+| 01-04-2020 | 0              |
+| 01-06-2020 | 25             |
+| 01-10-2020 | 100            |
+| 01-11-2020 | 100            |
+| 01-15-2020 | 100            |
+
+Solutions : 
+
+   select date , round(count(case when action='accepted' then 1 else null end)*1.00/count(action),2)*100 as per_acceptance 
+            from fb_friend_requests
+            group by 1 
+            order by 1
+      
