@@ -1,0 +1,91 @@
+Problem : Find the day of the year with the highest energy consumption
+Input tables 
+Europe_engery_consumption
+| date               | consumption |
+|--------------------|-------------|
+| 2018-01-01 0:00:00 | 388.1884214 |
+| 2018-01-01 0:15:00 | 386.595161  |
+| 2018-01-01 0:30:00 | 446.356182  |
+| 2018-01-01 0:45:00 | 323.0565043 |
+| 2018-01-01 1:00:00 | 518.5144096 |
+| 2018-01-01 1:15:00 | 189.1409304 |
+| 2018-01-01 1:30:00 | 500.3114597 |
+| 2018-01-01 1:45:00 | 596.4627253 |
+| 2018-01-01 2:00:00 | 485.2218924 |
+| 2018-01-01 2:15:00 | 490.0204607 |
+
+Asia_engery_consumption
+| date               | consumption |
+|--------------------|-------------|
+| 2018-01-01 0:00:00 | 125.6950915 |
+| 2018-01-01 0:15:00 | 560.8088675 |
+| 2018-01-01 0:30:00 | 397.8379915 |
+| 2018-01-01 0:45:00 | 355.5470852 |
+| 2018-01-01 1:00:00 | 371.7083719 |
+| 2018-01-01 1:15:00 | 266.6988118 |
+| 2018-01-01 1:30:00 | 389.7023078 |
+| 2018-01-01 1:45:00 | 307.7339648 |
+| 2018-01-01 2:00:00 | 357.7233673 |
+| 2018-01-01 2:15:00 | 198.4179741 |
+
+Na_engery_consumption
+| date               | consumption |
+|--------------------|-------------|
+| 2018-01-01 0:00:00 | 449.8622241 |
+| 2018-01-01 0:15:00 | 176.2671728 |
+| 2018-01-01 0:30:00 | 421.1218351 |
+| 2018-01-01 0:45:00 | 577.2015822 |
+| 2018-01-01 1:00:00 | 391.3704225 |
+| 2018-01-01 1:15:00 | 293.6821409 |
+| 2018-01-01 1:30:00 | 412.3639963 |
+| 2018-01-01 1:45:00 | 262.9903474 |
+| 2018-01-01 2:00:00 | 403.5549436 |
+| 2018-01-01 2:15:00 | 328.6622612 |
+
+Output 
+| day | grand_total |
+|-----|-------------|
+| 310 | 108034.8245 |
+
+solutions : 
+    select 
+    day,
+    sum(total_consumption) grand_total
+from
+    ((select 
+        EXTRACT (DOY FROM (date :: DATE)) AS day,
+        sum(consumption) AS total_consumption
+    from 
+        Na_energy_consumption
+    group by 
+        day
+    order by
+        day
+    )
+    UNION 
+    (select 
+        EXTRACT (DOY FROM (date :: DATE)) AS day,
+        sum(consumption) AS total_consumption
+    from 
+        Asia_energy_consumption
+    group by 
+        day
+    order by
+        day
+    )
+    UNION 
+    (select 
+        EXTRACT (DOY FROM (date :: DATE)) AS day,
+        sum(consumption) AS total_consumption
+    from 
+        Europe_energy_consumption
+    group by 
+        day
+    order by
+        day
+    ))X
+group by
+    day
+order by
+    grand_total desc
+limit 1 ;
