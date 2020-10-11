@@ -10,3 +10,24 @@ output
 |  0      |    	0     |
 
 
+problem 2 : what will output of different type of join 
+
+|A|	       |B|
+---        ----
+|1|        |1|
+|1|        |1|
+|1|
+|1|
+|1|
+
+
+selct count(*) from table A inner join Table B on a.id=b.id
+selct count(*) from table A left outer join Table B on a.id=b.id
+selct count(*) from table A full outer join Table B on a.id=b.id
+selct count(*) from table A right outer join Table B on a.id=b.id
+
+output of above query 
+1) 10
+2) 10
+3) 10
+4) 10
