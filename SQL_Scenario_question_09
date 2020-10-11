@@ -1,0 +1,52 @@
+problem : Search Ranking
+You're given a table that represents search results from searches on Facebook. The 'query' column is the search term and 'position' column represents the position the result came in.
+Write a query to calculate the percentage of search results that were in the top 3 position.
+
+Input Table :  fb_search_results
+
+| query        | result_id | position | notes                                                                                                                                                                                           |
+|--------------|-----------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| employee     | 696       | 7        | Still break every station. Actually develop third approach. Issue employee final.                                                                                                               |
+| organisation | 576       | 8        | Believe among quickly room organization. Kind push effort kind miss address. Approach draw wait dinner population. Style hit create major home arm. Truth about school easy.                    |
+| office       | 400       | 3        | Sure him mean analysis off whole west. Talk new scene nor toward road smile. Political they floor office. Say someone sell over in Democrat attack. Role dream position week full.              |
+| national     | 331       | 7        | Third star five law national thing instead. Blood military already those receive charge or product. Picture answer money. Challenge cell short. Maintain star have figure hot.                  |
+| fire         | 953       | 9        | Action about across whom. Me lead material the certain take fire.                                                                                                                               |
+| police       | 720       | 1        | Decision help cultural begin section follow discussion police. Then television open hold worker impact. Political student could.                                                                |
+| summer       | 123       | 6        | Method capital serve until. Figure turn summer prove personal financial country. Health fight meeting stay myself assume. Meet young them service each.                                         |
+| rabbit       | 120       | 7        | Very member father exist. Strategy door effort project minute. Discover head race. Half image happy while. One wish late floor actually fall you. Hair society item even affect improve.        |
+| cat          | 371       | 8        | Know rise what other pick. Somebody matter program once claim name. Site foot gas successful create two. Edge wind full test picture speech life. Rise value yard and.                          |
+| cat          | 670       | 6        | Certain build back southern piece woman network. Accept wish at hot perform. Apply after happen hotel decision quality instead. Family fall dinner stock base each bar trade.                   |
+| dog          | 595       | 2        | Finish wall we understand even man would front. One remain throughout live move work. Paper week level list despite everyone its. Law today defense on agreement catch.                         |
+| cat          | 857       | 1        | Better mission recent charge box like image. Build source apply respond. Herself happy thing site hope interview statement.                                                                     |
+| dog          | 739       | 1        | State range visit let owner. Small true hand example shake story respond. Without owner physical occur. Chance test close accept top according. Source author story have sell everybody near.   |
+| dog          | 612       | 3        | Actually arm water foot mouth. Number explain my itself involve season. Ok add people international admit although. Father church today race among however control popular.                     |
+| cat          | 649       | 1        | Voice shake several. Medical card politics front which where. Air name technology material source west. Entire same politics smile person carry.                                                |
+| citizen      | 471       | 5        | Toward upon traditional citizen. Type college save painting relationship probably around. Yet boy two. Experience there rock thousand front. Hotel possible popular read.                       |
+| dog          | 438       | 8        | There center police develop. Focus serve president foot indicate to according you. Hot once close wear. Debate town not our experience this model.                                              |
+| dog          | 407       | 7        | Give power look material member camera anything. Heavy company far possible offer speech win. Daughter continue dinner property service performance last.                                       |
+| cat          | 123       | 7        | Suffer name avoid back manage drive who. South situation story learn. Country society indicate. Stand evidence tree concern. Here relationship team since find little state.                    |
+| rabbit       | 368       | 6        | Why quality shoulder such strategy place. Attention worry shake still challenge animal.                                                                                                         |
+| book         | 477       | 1        | Treat involve book near. Behind blue mean too. Main town section fall down difficult. Inside change smile trade organization body. Career international woman still kind opportunity.           |
+| book         | 572       | 9        | Where ball short if sort. By since book near level themselves whatever. State station suddenly class. Financial catch drop course different. Help left head hotel. She who plan alone issue it. |
+| education    | 182       | 2        | Involve amount discover before step red experience. Cell us seem take treatment. Education total call. Lot appear able blue job various.                                                        |
+| rabbit       | 738       | 1        | Anyone he last sister. Vote work get audience sure certainly across. Itself law medical word memory would. Next order society. Under plan book dream.                                           |
+
+Ouput : 
+| top_3_percentage |
+|------------------|
+| 41.66666667      |
+
+Solution: We can consider results_id as primary key and perfrom left join join 
+
+SELECT (count(b.result_id)/count(a.result_id)::float)*100 AS top_3_percentage
+FROM fb_search_results a
+LEFT JOIN
+  (SELECT result_id,
+          position
+   FROM fb_search_results
+   WHERE position <=3) b ON a.result_id = b.result_id
+   
+   
+   Note : problem referance : stratascratch 
+
+
