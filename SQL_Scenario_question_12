@@ -1,0 +1,12 @@
+Problem 1 : what will be output when we compare null with null value 
+
+lets demostrate with below example 
+
+select case when null=null then 1 else 0 end as first_col,  case when null <> null then 1 else 0 end as second_col from dual 
+
+output 
+|FIRST_COL|	SECOND_COL|
+-----------------------
+|  0      |    	0     |
+
+
