@@ -1,0 +1,29 @@
+Problem : Find the most common reaction for day 1
+Find the most common reaction for day 1 by counting the number of occurrences for each reaction.
+Output the reaction alongside its number of occurrences.
+Order the result based on the number of occurrences in descending order.
+
+Input Table : socal_media 
+
+| poster | friend | reaction | date_day | post_id |
+|--------|--------|----------|----------|---------|
+| 2      | 1      | like     | 1        | 0       |
+| 2      | 6      | like     | 1        | 0       |
+| 1      | 2      | like     | 1        | 1       |
+| 1      | 3      | heart    | 1        | 1       |
+| 1      | 4      | like     | 1        | 1       |
+| 1      | 5      | heart    | 1        | 1       |
+| 1      | 6      | like     | 1        | 1       |
+| 2      | 1      | like     | 2        | 2       |
+| 2      | 6      | like     | 2        | 2       |
+| 1      | 2      | like     | 2        | 3       |
+
+output Table : 
+
+| reaction | num_of_reaction |
+|----------|-----------------|
+| like     | 5               |
+
+solutions : 
+
+select reaction , count(*) as num_of_reaction from socal_media where date_day =1 group by reaction order by num_of_reaction desc limit 1
