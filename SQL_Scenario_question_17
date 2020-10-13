@@ -1,0 +1,15 @@
+Problem : write SQL query to count the number of unique users per day who logged in from both iphone and web 
+          where iphone log and web log are distinct relation
+          
+Table Structure :           
+iphone :  ts | user_id | iphoneSessionId
+Web :   ts |user_id |webSessionId
+
+
+Solutions : 
+            select DATE_TRUNC('day',i.ts) as Day ,
+                   count(distinct i.user_id) as Num_of_users
+                   from iphone i inner join web w 
+                   on i.user_id=w.user_id
+                   and DATE_TRUNC('day',i.ts)=DATE_TRUNC('day',w.ts)
+                   group by 1
