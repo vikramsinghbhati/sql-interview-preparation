@@ -1,0 +1,27 @@
+Problem : SQL to fetch Emp hierarchical data in Flat format
+
+solutions : 
+
+select LV1_EMPNO,LV1_EMPNAME ,LV1,LV2_EMPNO,LV2_EMPNAME,LV2,LV3_EMPNO,LV3_EMPNAME,LV3,LV4_EMPNO,LV4_EMPNAME,LV4, EMPNO LV5_EMPNO,EMPNAME LV5_EMPNAME , 
+case when EMPNO is not null then 5 end LV5
+from  
+   ( 
+      select LV1_EMPNO,LV1_EMPNAME ,LV1,LV2_EMPNO,LV2_EMPNAME,LV2,LV3_EMPNO,LV3_EMPNAME,LV3 EMPNO LV4_EMPNO,EMPNAME LV4_EMPNAME , 
+      case when EMPNO is not null then 4 end LV4
+       from 
+          (
+             select LV1_EMPNO,LV1_EMPNAME ,LV1,LV2_EMPNO,LV2_EMPNAME,LV2,EMPNO LV3_EMPNO,EMPNAME LV3_EMPNAME , 
+               case when EMPNO is not null then 3 end LV3
+               from 
+                  ( 
+                     select LV1_EMPNO,LV1_EMPNAME ,LV1,EMPNO LV2_EMPNO,EMPNAME LV2_EMPNAME , 
+                             case when EMPNO is not null then 2 end LV2
+                             from 
+                                (
+                                   select EMPNO LV1_EMPNO,EMPNAME LV1_EMPNAME ,1 LV1
+                                     from emp where mgr is null ) L1,
+                                     emp L2 where L2.mgr(+)=L1.LV1_EMPNO) L2 , 
+                                     emp L3 where L3.mgr(+)=L2.L2_EMPNO ) L3, 
+                                     emp L4 where L4.mgr(+) =L3.L3_EMPNO ) L4 ,
+                                     emp L5 where L5.mgr(+)=L4.L4_EMPNO )l5
+									                    order by 1,4
