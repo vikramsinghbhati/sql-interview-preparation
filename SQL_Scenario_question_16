@@ -1,0 +1,49 @@
+problem : Employee Project Budgets
+Find the top five most expensive projects by the amount of budget allocated to each employee on the project.
+Exclude projects with 0 employees. 
+Assume each employee works on only one project. The output should be the project title and the budget that's allocated to each employee (i.e., a budget-to-employee ratio). 
+Display the top 5 projects with the highest budget-to-employee ratio first.
+
+Input Tables : ms_projects
+| id | title     | budget |
+|----|-----------|--------|
+| 1  | Project1  | 29498  |
+| 2  | Project2  | 32487  |
+| 3  | Project3  | 43909  |
+| 4  | Project4  | 15776  |
+| 5  | Project5  | 36268  |
+| 6  | Project6  | 41611  |
+| 7  | Project7  | 34003  |
+| 8  | Project8  | 49284  |
+| 9  | Project9  | 32341  |
+| 10 | Project10 | 47587  |
+
+ms_emp_projects
+
+| emp_id | project_id |
+|--------|------------|
+| 10592  | 1          |
+| 10593  | 2          |
+| 10594  | 3          |
+| 10595  | 4          |
+| 10596  | 5          |
+| 10597  | 6          |
+| 10598  | 7          |
+| 10599  | 8          |
+| 10600  | 9          |
+| 10601  | 10         |
+
+Solutions : 
+                --select * from ms_projects;
+
+select p.title as projects , p.budget/count(e.emp_id) as buget_to_emp_ratio from ms_projects p inner join ms_emp_projects e on p.id=e.project_id group by p.title,p.budget order by buget_to_emp_ratio  desc limit 5 
+
+Ouput :
+
+| projects  | buget_to_emp_ratio |
+|-----------|--------------------|
+| Project8  | 24642              |
+| Project49 | 24387              |
+| Project15 | 24058              |
+| Project10 | 23793              |
+| Project19 | 22493              |
