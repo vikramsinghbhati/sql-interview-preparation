@@ -1,0 +1,39 @@
+problem : Employee Salaries
+Select the top 3 departments by the highest percentage of employees making over $100K in salary and have at least 10 employees. 
+Output the department name and percentage of employes making over $100K. Sort by department with the highest percentage to the lowest.
+input Tables : employee
+
+| id | first_name | last_name | salary | department_id |
+|----|------------|-----------|--------|---------------|
+| 1  | Todd       | Wilson    | 106119 | 1006          |
+| 2  | Justin     | Simon     | 128922 | 1005          |
+| 3  | Kelly      | Rosario   | 42689  | 1002          |
+| 4  | Patricia   | Powell    | 162825 | 1004          |
+| 5  | Sherry     | Golden    | 44101  | 1002          |
+| 6  | Natasha    | Swanson   | 79632  | 1005          |
+| 7  | Diane      | Gordon    | 74591  | 1002          |
+| 8  | Mercedes   | Rodriguez | 61048  | 1005          |
+| 9  | Christy    | Mitchell  | 137236 | 1001          |
+| 10 | Sean       | Crawford  | 182065 | 1006          |
+
+department
+| epartment_id | name           |
+|--------------|----------------|
+| 1001         | Marketing      |
+| 1002         | Human Resource |
+| 1003         | Operations     |
+| 1004         | Finance        |
+| 1005         | Sales          |
+| 1006         | Engineering    |
+
+solutions : 
+
+select t.name, (t.emp_making_more_than_10k/s.all_emp::FLOAT)*100 as percentage_emp
+from 
+(select name , count(id) as emp_making_more_than_10k from employee e join department d on e.department_id=d.department_id where e.salary > 100000 group by name) t
+left join
+(select name , count(id) as all_emp from employee e join department d on e.department_id=d.department_id  group by name) s
+on t.name=s.name
+where s.all_emp>=10
+order by percentage_emp desc
+limit 3
