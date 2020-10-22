@@ -1,0 +1,42 @@
+Problem : Most Active Users On Messenger
+  Messenger stores the number of messages between users in a table named 'messages'. In this table 'user1' is the sender,
+  'user2' is the receiver, and 'msg_count' is the number of messages exchanged between them.
+Find the top 10 most active users on  Messenger by counting their total number of messages sent and received.
+Input Table:
+| id | date       | user1         | user2       | msg_count |
+|----|------------|---------------|-------------|-----------|
+| 1  | 08-02-2020 | kpena         | scottmartin | 2         |
+| 2  | 08-02-2020 | misty19       | srogers     | 2         |
+| 3  | 08-02-2020 | jerome75      | craig23     | 3         |
+| 4  | 08-02-2020 | taylorhoward  | johnmccann  | 8         |
+| 5  | 08-02-2020 | wangdenise    | sgoodman    | 2         |
+| 6  | 08-02-2020 | wolfelizabeth | sgoodman    | 4         |
+| 7  | 08-02-2020 | robbinsbrenda | morenowayne | 7         |
+| 8  | 08-02-2020 | trobinson     | lindsey38   | 9         |
+| 9  | 08-02-2020 | kirk72        | tanya26     | 8         |
+| 10 | 08-02-2020 | davidfoster   | lindsey38   | 7         |
+
+output Table : 
+| username      | total_msg |
+|---------------|-----------|
+| tanya26       | 9         |
+| johnmccann    | 9         |
+| craig23       | 8         |
+| wangdenise    | 7         |
+| lfisher       | 7         |
+| scottmartin   | 7         |
+| trobinson     | 6         |
+| ucrawford     | 6         |
+| herringcarlos | 6         |
+| achang        | 5         |
+
+solutions : 
+select t.username , count(t.msg_count) as total_msg
+from 
+(
+select user1 as username , msg_count from messages
+union all
+select user1 as username , msg_count from messages) t
+group by t.username
+order by t.msg_count desc
+limit 10 ;
