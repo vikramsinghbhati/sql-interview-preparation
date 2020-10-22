@@ -1,0 +1,42 @@
+Problem : Post Success
+Write a query to get the post success rate by date.
+Assume that the first action for all postings is 'enter' followed by either 'post' (if posting is successful) or 'cancel' (if posting is not successful).
+
+Input Table : Post_events
+| user_id | created_at | event_name |
+|---------|------------|------------|
+| 139     | 08-25-2020 | enter      |
+| 139     | 08-25-2020 | post       |
+| 144     | 08-26-2020 | enter      |
+| 144     | 08-26-2020 | cancel     |
+| 866     | 08-30-2020 | enter      |
+| 866     | 08-30-2020 | post       |
+| 715     | 08-30-2020 | enter      |
+| 715     | 08-30-2020 | post       |
+| 948     | 08-30-2020 | enter      |
+| 948     | 08-30-2020 | cancel     |
+
+output : 
+| | created_at | post | enter | post_sucesss_rate | |
+|---------------------------------------------------|
+| |------------|------|-------|-------------------| |
+| | 08-29-2020 | 1    | 1     | 1                 | |
+| | 08-30-2020 | 2    | 5     | 0.4               | |
+| | 08-28-2020 | 0    | 1     | 0                 | |
+| | 08-27-2020 | 0    | 1     | 0                 | |
+| | 08-24-2020 | 1    | 1     | 1                 | |
+| | 08-26-2020 | 0    | 1     | 0                 | |
+| | 08-25-2020 | 4    | 4     | 1                 | |
+
+Soultions : 
+select created_at , post , enter , post/enter::FLOAT as post_sucesss_rate
+from 
+(
+select created_at ,
+count(case when event_name='enter' then user_id end) as enter ,
+count(case when event_name='post' then user_id end) as post ,
+count(case when event_name='cancel' then user_id end) as cancel 
+from 
+post_events
+group by created_at) t
+group by created_at , post ,enter
