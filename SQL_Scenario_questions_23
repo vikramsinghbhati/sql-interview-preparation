@@ -1,0 +1,37 @@
+Problem : Acceptance Rate By Date
+What is the overall friend acceptance rate by date?
+Order by the latest friend request date to the earliest date
+Assume that each friend request starts by a user sending a friend request that's logged in the table with action = 'sent'
+
+Input Table : friend_requests
+
+| user_id_sender | user_id_receiver | date       | action   |
+|----------------|------------------|------------|----------|
+| ad4943sdz      | 948ksx123d       | 01-04-2020 | sent     |
+| fg503kdsdd     | ofp049dkd        | 01-04-2020 | sent     |
+| dfdfxf9483     | 9djjjd9283       | 01-04-2020 | sent     |
+| hh643dfert     | 847jfkf203       | 01-04-2020 | sent     |
+| ad4943sdz      | 948ksx123d       | 01-06-2020 | accepted |
+| fffkfld9499    | 993lsldidif      | 01-06-2020 | sent     |
+| fg503kdsdd     | ofp049dkd        | 01-10-2020 | accepted |
+| fffkfld9499    | 993lsldidif      | 01-10-2020 | accepted |
+| r4gfgf2344     | 234ddr4545       | 01-06-2020 | sent     |
+| ffdfff4234234  | lpjzjdi4949      | 01-06-2020 | sent     |
+
+output : 
+| date       | per_accepted |
+|------------|--------------|
+| 01-06-2020 | 0.6666666667 |
+| 01-04-2020 | 0.75         |
+
+solutions : 
+
+select a.date,count(b.user_id_receiver)/count(a.user_id_sender) :: FLOAT as per_accepted
+from 
+(select user_id_sender ,user_id_receiver,date,action from friend_requests where action='sent') a
+left join 
+(select user_id_sender ,user_id_receiver,date,action from friend_requests where action='accepted') b 
+on b.user_id_sender=a.user_id_sender and b.user_id_receiver=a.user_id_receiver
+ 
+group by a.date
+order by a.date desc
