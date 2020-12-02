@@ -1,0 +1,27 @@
+Problem no : 24 Check the below input & output data, and if column forms a sequence then print ‘Yes’ other print ‘No’.
+
+Input Data 
+n
+-----------
+100
+101
+102
+103
+104
+105
+
+Output res 
+Flag
+----
+Yes
+
+Solutions : with cte_seq as 
+(
+select n , row_number() over ( order by n) as rnk from seq 
+)
+, cte_cnt as 
+(
+select n-rnk  as res , count(1) as cnt from cte_seq group by n-rnk 
+)
+
+select case when count(1)=1 then "YES" else "NO" end as Flag from cte_cnt ;
