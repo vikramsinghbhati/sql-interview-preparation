@@ -1,0 +1,34 @@
+Problem : Generate the range of data basis on common combination.
+
+Input Data : seqence
+ID          CreationDate SendFlag ReceiveFlag
+----------- ------------ -------- -----------
+1           2016-08-08   0        0
+2           2016-10-01   0        0
+3           2016-11-26   1        0
+4           2016-12-26   1        0
+5           2017-01-08   1        0
+6           2017-03-10   1        1
+7           2017-06-20   1        1
+8           2017-08-15   0        1
+
+Output Data : 
+StartID     EndID       SendFlag ReceiveFlag
+----------- ----------- -------- -----------
+1           2           0        0
+3           5           1        0
+6           7           1        1
+8           8           0        1
+
+
+Solutions : 
+with cte1 as 
+(
+select f1.* , row_number() over ( order by f1.id) as rnk from seqence f1 left join seqence f2 on f1.id+1=f2.id and f1.sendflag=f2.receivedflag where f2.id is null
+)
+with cte2 as
+(
+select f2.* , row_number() over ( order by f2.id) as rnk from seqence f1 right join seqence f2 on f1.id=f2.id-1 and f1.sendflag=f2.receivedflag where f1.id is null
+)
+
+select c2.id as startid , c1.id as endid ,c1.sendflag,c2.receivedflag from cte1 c1 inner join cte2 c2 on c1.rnk=c2=rnk
